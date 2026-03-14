@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "743888303181",
+    "project_id": "school-management-app-9dc59",
+    "storage_bucket": "school-management-app-9dc59.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:743888303181:android:3c2c976f5a7629a1469804",
+        "android_client_info": {
+          "package_name": "com.hsenotificationapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAohyDuSegO3CuFHAl1Ueh-jWL2ivsiqf0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
