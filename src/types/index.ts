@@ -1,16 +1,22 @@
 export interface User {
   id: number;
   name: string;
+  first_name: string;
+  last_name: string;
+  admission_number: string;
+  roll_number: string;
+  class_id: number;
+  class_name: string;
+  section_id: number | null;
+  section_name: string | null;
+  school_id: number;
+  father_name: string;
+  mother_name: string;
   parent_phone: string;
-  class?: string;
-  section?: string;
-  admission_number?: string;
-  school_id?: number;
-  father_name?: string;
-  mother_name?: string;
-  class_id?: number;
-  roll_number?: string;
-  photo_url?: string;
+  alternate_phone: string | null;
+  parent_email: string | null;
+  photo_url: string | null;
+  is_active: boolean;
 }
 export interface Student {
   id: number;
@@ -22,13 +28,20 @@ export interface Student {
   photo_url: string;
 }
 export interface Notification {
-  id: string;
+  id: number;
+  school_id: number;
+  created_by: number;
   title: string;
   body: string;
-  type: 'fee' | 'attendance' | 'exam' | 'event' | 'general';
-  data?: Record<string, any>;
+  recipient_type: 'single' | 'class' | 'section' | 'all';
+  class_id: number | null;
+  section_id: number | null;
+  sent_count: number;
+  failed_count: number;
+  data: any;
   created_at: string;
-  is_read: boolean;
+  is_read?: boolean; // We'll add this client-side
+  read_at?: string | null;
 }
 
 export interface NotificationStats {
@@ -70,4 +83,11 @@ export interface NotificationRequest {
   title: string;
   body: string;
   data?: Record<string, any>;
+}
+export interface NotificationHistoryResponse {
+  success: boolean;
+  history: Notification[];
+  total: number;
+  page: number;
+  pages: number;
 }

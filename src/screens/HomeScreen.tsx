@@ -44,6 +44,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     loadUserData();
@@ -71,8 +72,11 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
 
   const loadNotifications = async () => {
     try {
-      const data = await notificationService.getNotifications();
+      const data = await notificationService.getNotifications(1, 20);
       setNotifications(data);
+
+      const unread = await notificationService.getUnreadCount();
+      setUnreadCount(unread);
     } catch (error) {
       console.error('Failed to load notifications:', error);
     } finally {
@@ -114,7 +118,7 @@ const HomeScreen: React.FC<HomeScreenProps> = ({ navigation }) => {
     loadNotifications();
   };
 
-  const unreadCount = notifications.filter((n) => !n.is_read).length;
+  // const unreadCount = notifications.filter((n) => !n.is_read).length;
 
   const getGreeting = (): string => {
     const hour = new Date().getHours();

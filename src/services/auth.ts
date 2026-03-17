@@ -92,7 +92,7 @@ async completeStudentSelection(
     } finally {
       await storage.removeItem(STORAGE_KEYS.USER_TOKEN);
       await storage.removeItem(STORAGE_KEYS.USER_DATA);
-      await storage.removeItem(STORAGE_KEYS.NOTIFICATIONS);
+      // await storage.removeItem(STORAGE_KEYS.NOTIFICATIONS);
       await storage.removeItem(STORAGE_KEYS.SCHOOL_ID);
     }
   }

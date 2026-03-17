@@ -156,7 +156,7 @@ const ProfileScreen: React.FC<Props> = ({ navigation }) => {
           <View style={styles.infoRow}>
             <GraduationCap size={16} color={colors.textLight} />
             <Text style={styles.infoText}>
-              Class ID: {user?.class_id}
+              Class Name: {user?.class_name}
             </Text>
           </View>
 

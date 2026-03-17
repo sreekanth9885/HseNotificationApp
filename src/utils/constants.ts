@@ -48,4 +48,5 @@ export const STORAGE_KEYS = {
   SCHOOL_ID: 'school_id',
   DEVICE_REGISTERED: 'device_registered',
   FCM_TOKEN: 'fcm_token',
+  READ_NOTIFICATIONS: 'read_notifications',
 } as const;

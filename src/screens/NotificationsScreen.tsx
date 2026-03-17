@@ -92,7 +92,7 @@ const NotificationsScreen: React.FC<NotificationsScreenProps> = ({ navigation })
           text: 'Clear',
           style: 'destructive',
           onPress: async () => {
-            await notificationService.clearNotifications();
+            // await notificationService.clearNotifications();
             loadNotifications();
           },
         },
@@ -145,7 +145,7 @@ const NotificationsScreen: React.FC<NotificationsScreenProps> = ({ navigation })
       {/* Notifications List */}
       <FlatList
         data={notifications}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item, index) => `${item.id}-${index}`}
         renderItem={({ item }) => (
           <NotificationCard
             notification={item}
