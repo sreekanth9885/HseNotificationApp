@@ -26,7 +26,7 @@ import {
 } from 'lucide-react-native';
 import { colors, typography } from '../theme/colors';
 import { Notification } from '../types';
-import { getNotificationIcon, getNotificationColor } from '../utils/constants';
+import { getNotificationIcon, getNotificationColor, NOTIFICATION_TYPES, NotificationType } from '../utils/constants';
 import { getTimeAgo } from '../utils/helpers';
 
 interface NotificationCardProps {
@@ -34,8 +34,6 @@ interface NotificationCardProps {
   onPress: () => void;
   style?: ViewStyle;
 }
-
-// Map icon names to actual components
 const iconMap = {
   Bell,
   CheckCircle,
@@ -54,26 +52,20 @@ const iconMap = {
   Star,
   Zap,
 } as const;
-
 type IconName = keyof typeof iconMap;
-
 const NotificationCard: React.FC<NotificationCardProps> = ({
   notification,
   onPress,
   style,
 }) => {
   const { title, body, type, created_at, is_read } = notification;
-
-  const iconName = getNotificationIcon(type) as IconName;
-  const iconColor = getNotificationColor(type);
+  const notificationType = (type || NOTIFICATION_TYPES.GENERAL) as NotificationType;
+  const iconName = getNotificationIcon(notificationType) as IconName;
+  const iconColor = getNotificationColor(notificationType);
   const timeAgo = getTimeAgo(created_at);
-
-  // Get the icon component from the map
   const IconComponent = iconMap[iconName];
-
   if (!IconComponent) {
     console.warn(`Icon "${iconName}" not found in iconMap`);
-    // Return a default Bell icon if the specific icon isn't found
     return (
       <TouchableOpacity
         style={[
@@ -87,7 +79,6 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
         <View style={[styles.iconContainer, { backgroundColor: `${iconColor}15` }]}>
           <Bell size={24} color={iconColor} />
         </View>
-        
         <View style={styles.contentContainer}>
           <View style={styles.headerRow}>
             <Text style={[styles.title, !is_read && styles.unreadTitle]} numberOfLines={1}>
@@ -95,17 +86,14 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
             </Text>
             <Text style={styles.timeText}>{timeAgo}</Text>
           </View>
-          
           <Text style={styles.body} numberOfLines={2}>
             {body}
           </Text>
-          
           {!is_read && <View style={styles.unreadDot} />}
         </View>
       </TouchableOpacity>
     );
   }
-
   return (
     <TouchableOpacity
       style={[

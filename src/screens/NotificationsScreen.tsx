@@ -13,8 +13,6 @@ import NotificationCard from '../components/NotificationCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import notificationService from '../services/notificationService';
 import { Notification } from '../types';
-
-// Import Lucide icons
 import {
   ArrowLeft,
   Delete,
@@ -25,27 +23,20 @@ import {
   ChevronLeft
 } from 'lucide-react-native';
 import { RootStackParamList } from '../navigation/AppNavigator';
-
-
-
 type NotificationsScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   'MainTabs'
->;
-
+  >;
 interface NotificationsScreenProps {
   navigation: NotificationsScreenNavigationProp;
 }
-
 const NotificationsScreen: React.FC<NotificationsScreenProps> = ({ navigation }) => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-
   useEffect(() => {
     loadNotifications();
   }, []);
-
   const loadNotifications = async () => {
     try {
       const data = await notificationService.getNotifications();
@@ -57,31 +48,24 @@ const NotificationsScreen: React.FC<NotificationsScreenProps> = ({ navigation })
       setRefreshing(false);
     }
   };
-
   const handleRefresh = useCallback(() => {
     setRefreshing(true);
     loadNotifications();
   }, []);
-
   const handleNotificationPress = async (notification: Notification) => {
     await notificationService.markAsRead(notification.id);
     loadNotifications();
-
     if (!notification.data?.screen) return;
-
     const screenMap: any = {
       home: 'HomeTab',
       notifications: 'NotificationsTab',
       profile: 'ProfileTab',
     };
-
     const route = screenMap[notification.data.screen.toLowerCase()];
-
     if (route) {
       navigation.navigate('MainTabs', { screen: route });
     }
   };
-
   const handleClearAll = () => {
     Alert.alert(
       'Clear All Notifications',
@@ -92,23 +76,18 @@ const NotificationsScreen: React.FC<NotificationsScreenProps> = ({ navigation })
           text: 'Clear',
           style: 'destructive',
           onPress: async () => {
-            // await notificationService.clearNotifications();
             loadNotifications();
           },
         },
       ]
     );
   };
-
   const unreadCount = notifications.filter((n) => !n.is_read).length;
-
   if (loading) {
     return <LoadingSpinner fullScreen />;
   }
-
   return (
     <View style={styles.container}>
-      {/* Header */}
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.backButton}
@@ -116,17 +95,13 @@ const NotificationsScreen: React.FC<NotificationsScreenProps> = ({ navigation })
         >
           <ChevronLeft size={24} color={colors.text} strokeWidth={2} />
         </TouchableOpacity>
-        
         <Text style={styles.headerTitle}>Notifications</Text>
-        
         {notifications.length > 0 && (
           <TouchableOpacity style={styles.clearButton} onPress={handleClearAll}>
             <Trash2 size={24} color={colors.danger} strokeWidth={2} />
           </TouchableOpacity>
         )}
       </View>
-
-      {/* Stats */}
       <View style={styles.statsBar}>
         <View style={styles.statsContainer}>
           <BellRing size={16} color={colors.warning} strokeWidth={1.5} />
@@ -141,8 +116,6 @@ const NotificationsScreen: React.FC<NotificationsScreenProps> = ({ navigation })
           </Text>
         </View>
       </View>
-
-      {/* Notifications List */}
       <FlatList
         data={notifications}
         keyExtractor={(item, index) => `${item.id}-${index}`}

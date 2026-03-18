@@ -33,7 +33,7 @@ export interface Notification {
   created_by: number;
   title: string;
   body: string;
-  recipient_type: 'single' | 'class' | 'section' | 'all';
+  recipient_type: 'single' | 'multiple' | 'class' | 'section' | 'all';
   class_id: number | null;
   section_id: number | null;
   sent_count: number;
